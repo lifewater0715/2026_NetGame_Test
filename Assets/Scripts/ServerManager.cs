@@ -5,7 +5,7 @@ using System;
 using TMPro;
 using System.Linq;
 
-public class Server_Manager : MonoBehaviour
+public class ServerManager : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private TMP_Text serverStateUI;

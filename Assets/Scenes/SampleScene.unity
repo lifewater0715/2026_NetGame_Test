@@ -926,7 +926,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1770840545}
-        m_TargetAssemblyTypeName: Server_Manager, Assembly-CSharp
+        m_TargetAssemblyTypeName: ServerManager, Assembly-CSharp
         m_MethodName: HostStart
         m_Mode: 1
         m_Arguments:
@@ -1337,8 +1337,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 469131531}
-  - {fileID: 1957434598}
   - {fileID: 1037719327}
+  - {fileID: 1957434598}
   m_Father: {fileID: 431770949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -1468,7 +1468,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1770840545}
-        m_TargetAssemblyTypeName: Server_Manager, Assembly-CSharp
+        m_TargetAssemblyTypeName: ServerManager, Assembly-CSharp
         m_MethodName: ClientStart
         m_Mode: 1
         m_Arguments:
@@ -1938,8 +1938,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1770840542}
   - component: {fileID: 1770840544}
-  - component: {fileID: 1770840543}
   - component: {fileID: 1770840545}
+  - component: {fileID: 1770840543}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -2495,8 +2495,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1770840545}
-        m_TargetAssemblyTypeName: Server_Manager, Assembly-CSharp
-        m_MethodName: ServerStart
+        m_TargetAssemblyTypeName: ServerManager, Assembly-CSharp
+        m_MethodName: HostStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
