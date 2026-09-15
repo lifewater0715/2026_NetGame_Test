@@ -3,6 +3,12 @@
 ## 참고 문헌
 https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.13/manual/tutorials/get-started-with-ngo.html
 -------
+## RPC형식
+* RPC -> 네트워크 통신간에 언어에 구속되지 않고 쉽게 통신하기 위한 수?단?
+* 해당 함수가 실행될 위치를 정하는 구조
+* RPC <-- 이친구 쿼터니언 값 직열화 못함;;
+
+-------
 ## 플래이어 이동 로직
 * 지금은 Network Transform 인스팩터로 동기화중
 -------

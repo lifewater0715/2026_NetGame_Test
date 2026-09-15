@@ -34,13 +34,13 @@ public class ServerManager : MonoBehaviour
         networkManager.StartClient();
     }
 
+    [Rpc(SendTo.Server)]
     private void Server_S_UI(char serverStateText)
     {
         string Text = "Current State : <" + serverStateText + ">";
         serverStateUI.text = Text;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
