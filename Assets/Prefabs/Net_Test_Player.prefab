@@ -122,13 +122,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2941026141299515271}
   - component: {fileID: 6173832586894944321}
+  - component: {fileID: 5358269817756890661}
   - component: {fileID: 8117488321031772896}
   - component: {fileID: 4618870868488152759}
   - component: {fileID: 8305560496930426661}
   - component: {fileID: 8473754956736123362}
   - component: {fileID: 2237197383001017192}
   - component: {fileID: 4914211646477475956}
-  - component: {fileID: 5358269817756890661}
+  - component: {fileID: 4478882640750376350}
   m_Layer: 0
   m_Name: Net_Test_Player
   m_TagString: Untagged
@@ -174,10 +175,32 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.75
+  m_Height: 3
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.3, z: 0.15}
+--- !u!95 &5358269817756890661
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007568376228753825}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5550f677911f8ac409e66cfc8ac78dc9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8117488321031772896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3182113225
+  GlobalObjectIdHash: 2984492911
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -265,10 +288,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponManager
   ShowTopMostFoldoutHeaderGroup: 1
   Bullet: {fileID: 8613308796444081370, guid: aceca766142a4e14282d13f8f640c7b8, type: 3}
-  FireDlay: 0
+  FireDlay: 1.75
   FireDir: {x: 0, y: 0, z: 0}
   Muzzle: {fileID: 1548197504478614093}
   AnimTrg: {fileID: 0}
+  FireParticleSystemFire: {fileID: 0}
+  FireParticleSystemSmoke: {fileID: 5032856187609777146}
 --- !u!114 &4914211646477475956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,28 +340,30 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!95 &5358269817756890661
-Animator:
-  serializedVersion: 7
+--- !u!114 &4478882640750376350
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007568376228753825}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5550f677911f8ac409e66cfc8ac78dc9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkAnimator
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkAnimatorExpanded: 0
+  AuthorityMode: 1
+  m_Animator: {fileID: 5358269817756890661}
+  TransitionStateInfoList: []
+  AnimatorParameterEntries:
+    ParameterEntries:
+    - name: IsFire
+      NameHash: -28370443
+      Synchronize: 1
+      ParameterType: 4
+  AnimatorParametersExpanded: 0
 --- !u!1 &1327030675658976298
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +627,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

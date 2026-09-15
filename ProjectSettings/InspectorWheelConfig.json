@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "defaultStep": 1.0,
+    "fineStep": 0.10000000149011612,
+    "fastStep": 10.0
+}

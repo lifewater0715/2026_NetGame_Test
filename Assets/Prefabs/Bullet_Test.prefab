@@ -185,6 +185,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   ShowTopMostFoldoutHeaderGroup: 1
   bulletRigidbody: {fileID: 0}
-  bulletSpeed: 7.5
+  bulletSpeed: 17.5
   bulletLifetime: 10
   bulletForceLifetime: 7
