@@ -2,6 +2,8 @@ using UnityEngine;
 using Unity.Netcode;
 using System;
 using System.Collections;
+using NUnit.Framework;
+using Unity.VisualScripting;
 
 public class PlayerWeaponManager : NetworkBehaviour
 {
@@ -9,9 +11,12 @@ public class PlayerWeaponManager : NetworkBehaviour
     [SerializeField] private GameObject Bullet;
 
     // FireDlay
-    [SerializeField] private float FireDlay;
     private float DlayTimer;
+    private float DlayTimerServer;
+
+    [SerializeField] private float FireDlay;
     [SerializeField] private bool CanFire = true;
+    [SerializeField] private bool CanFireServer = true;
 
     //GetPlayerFire Info
     [SerializeField] private Vector3 FireDir;   // 발사각
@@ -32,68 +37,68 @@ public class PlayerWeaponManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!CanFire) BulletFireDlayRpc();
-
-        if(Input.GetKey(KeyCode.Space) && IsOwner && CanFire)
+        if (!CanFire) DlayTimer += Time.deltaTime;
+        if (FireDlay <= DlayTimer && !CanFire)
         {
-            CanFire = false; // 발사 초기화
+            BulletFireDlayRpc(true);
+            DlayTimer = 0f;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && IsOwner && CanFire)
+        {
+            CanFire = false; // 발사 트리거 초기화
+
             StartCoroutine(AnimationPlayer()); //에니메이션 트리거 ON
             BulletFireRpc(Muzzle.transform.position, Muzzle.transform.rotation.eulerAngles);
         }
     }
 
-    [Rpc(SendTo.Server)] // 발사 딜레이 연산 (server)
-    private void BulletFireDlayRpc() 
+    private IEnumerator AnimationPlayer() //에니메이션 플레이어
     {
-        DlayTimer += Time.deltaTime;
-        if(FireDlay <= DlayTimer)
-        {
-            DlayTimer = 0f;
-            BulletDlaySanderRpc();
-        }
+        AnimTrg.SetBool("IsFire", true);
 
+        yield return new WaitForSeconds(0.15f);
+
+        AnimTrg.SetBool("IsFire", false);
+    }
+
+    [Rpc(SendTo.Server)] // 발사 딜레이 연산 (server)
+    private void BulletFireDlayRpc(bool canFire)
+    {
+        BulletDlaySanderRpc(canFire);
         return;
-    } 
+    }
 
-    [Rpc(SendTo.ClientsAndHost)] //발사 딜레이 클라이언트로 전송 (client)
-    private void BulletDlaySanderRpc()
+    [Rpc(SendTo.ClientsAndHost)] //발사 딜레이 클라이언트로 전송 (host/client)
+    private void BulletDlaySanderRpc(bool canFire)
     {
         if (!IsOwner) return;
 
-        Debug.Log("발사 가능!");
         CanFire = true;
         return;
     }
 
-    [Rpc(SendTo.Server)] // 탄환 전송 (host)
-    private void BulletFireRpc(Vector3 BulletPos,Vector3 BulletRot)
+    [Rpc(SendTo.Server)] // 발사 입력 전송 (host)
+    private void BulletFireRpc(Vector3 BulletPos, Vector3 BulletRot)
     {
-        Debug.Log("FirePos : "+ transform.position +"/FireDir : "+ BulletRot);
-        DrawBulletRpc(BulletPos,BulletRot);
+        //Debug.Log("FirePos : "+ transform.position +"/FireDir : "+ BulletRot);
+        CanFireServer = false; // 서버 발사 트리거 초기화
+
+        EffectTrigerRpc();
+        BulletDrawRpc(BulletPos, BulletRot);
     }
 
     [Rpc(SendTo.ClientsAndHost)] // 탄환 드로우 (host/Client)
-    private void DrawBulletRpc(Vector3 BulletPos,Vector3 BulletRot)
+    private void BulletDrawRpc(Vector3 BulletPos, Vector3 BulletRot)
     {
-        Debug.Log("DrawPos : "+ transform.position);
+        //Debug.Log("DrawPos : "+ transform.position);
         GameObject bullet = Instantiate(Bullet, BulletPos, Quaternion.Euler(BulletRot));
     }
 
-    [Rpc(SendTo.ClientsAndHost)] // 이팩트 실행 (host/Client)
+    [Rpc(SendTo.ClientsAndHost)] // 이팩트 실행 각각의 클라이언트로 전송 (host/Client)
     private void EffectTrigerRpc()
     {
         FireParticleSystemSmoke.Play();
-        if(IsOwner!) return;
-    }
-
-    private IEnumerator AnimationPlayer()
-    {
-        AnimTrg.SetBool("IsFire",true);
-
-        EffectTrigerRpc();
-
-        yield return new WaitForSeconds(0.1f);
-
-        AnimTrg.SetBool("IsFire",false);
+        return;
     }
 }

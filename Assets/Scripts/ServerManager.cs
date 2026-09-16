@@ -9,7 +9,7 @@ public class ServerManager : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private TMP_Text serverStateUI;
-    [SerializeField] private char serverState = 'N';
+    //[SerializeField] private char serverState = 'N';
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()

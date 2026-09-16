@@ -33,7 +33,7 @@ public class Bullet : NetworkBehaviour
 
         if (hitTrg.transform.tag == "Player")
         {
-            Debug.Log(hitTrg.gameObject.name + "/ 명중됨" + gameObject.transform.position + " 명중 좌표");
+            //Debug.Log(hitTrg.gameObject.name + "/ 명중됨" + gameObject.transform.position + " 명중 좌표");
         }
 
         Destroy(gameObject,1f);
