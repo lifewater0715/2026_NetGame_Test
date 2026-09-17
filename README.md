@@ -2,6 +2,7 @@
 
 ## 참고 문헌
 https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.13/manual/tutorials/get-started-with-ngo.html
+https://docs.unity.com/ko-kr/mps-sdk/tutorials/relay-and-ngo
 
 ## RPC형식
 * RPC -> 네트워크 통신간에 언어에 구속되지 않고 쉽게 통신하기 위한 수단

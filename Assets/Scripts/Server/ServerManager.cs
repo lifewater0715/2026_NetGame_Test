@@ -49,7 +49,7 @@ public class ServerManager : MonoBehaviour
 
     public void ClientStart(String code)
     {
-        if (code != null)
+        if (code != "")
         {
             JoinGame(code);
         }
