@@ -28,14 +28,14 @@ public class ServerManager : MonoBehaviour
 
     void Awake()
     {
-        Server_S_UI_Rpc('N');
         LoginUnityRplay();
+        Server_S_UI_Rpc('N');
         networkManager = gameObject.GetComponent<NetworkManager>();
     }
 
     public void HostStart(String ip, String host)
     {
-        if (ip != null && host != null)
+        if (ip != "" && host != "")
         {
             networkManager.StartHost();
         }
@@ -60,7 +60,7 @@ public class ServerManager : MonoBehaviour
         Server_S_UI_Rpc('C');
         return;
     }
-    
+
     public void StopServer()
     {
         Debug.Log("STOP!");
@@ -109,7 +109,7 @@ public class ServerManager : MonoBehaviour
                     .CreateSessionAsync(options);
 
             JoinCode = currentSession.Code;
-            inviteCodeUI.text = "InviteCode : <" + JoinCode +">";
+            inviteCodeUI.text = "InviteCode : <" + JoinCode + ">";
             Debug.Log($"Relay Host 생성 완료");
             Debug.Log($"Join Code : {JoinCode}");
         }

@@ -13,10 +13,10 @@ public class DebugUI : MonoBehaviour
     [SerializeField] private TMP_InputField GetCode;
     [SerializeField] private TMP_InputField GetUserName;
 
-    private String IP;
-    private String Port;
-    private String Code;
-    private String UserName;
+    [SerializeField] private String IP;
+    [SerializeField] private String Port;
+    [SerializeField] private String Code;
+    [SerializeField] private String UserName;
 
     void Awake()
     {
@@ -28,7 +28,7 @@ public class DebugUI : MonoBehaviour
     {
         serverManager.HostStart(IP,Port);
     }
-    public void StartClient(String code)
+    public void StartClient()
     {
         serverManager.ClientStart(Code);
     }
