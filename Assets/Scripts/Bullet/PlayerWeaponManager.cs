@@ -16,7 +16,7 @@ public class PlayerWeaponManager : NetworkBehaviour
 
     [SerializeField] private float FireDlay;
     [SerializeField] private bool CanFire = true;
-    [SerializeField] private bool CanFireServer = true;
+    //[SerializeField] private bool CanFireServer = true;
 
     //GetPlayerFire Info
     [SerializeField] private Vector3 FireDir;   // 발사각
@@ -82,7 +82,7 @@ public class PlayerWeaponManager : NetworkBehaviour
     private void BulletFireRpc(Vector3 BulletPos, Vector3 BulletRot)
     {
         //Debug.Log("FirePos : "+ transform.position +"/FireDir : "+ BulletRot);
-        CanFireServer = false; // 서버 발사 트리거 초기화
+        //CanFireServer = false; // 서버 발사 트리거 초기화
 
         EffectTrigerRpc();
         BulletDrawRpc(BulletPos, BulletRot);
