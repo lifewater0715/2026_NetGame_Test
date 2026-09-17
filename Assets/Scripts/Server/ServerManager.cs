@@ -17,43 +17,57 @@ public class ServerManager : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private TMP_Text serverStateUI;
+    [SerializeField] private TMP_Text inviteCodeUI;
 
     private ISession currentSession;
-    [SerializeField] private string INVTCODE;
-    public string JoinCode;
+    [SerializeField] private string InviteCode;
+    [SerializeField] private string JoinCode;
 
     //[SerializeField] private char serverState = 'N';
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Awake()
     {
-        Server_S_UI('N');
+        Server_S_UI_Rpc('N');
         LoginUnityRplay();
         networkManager = gameObject.GetComponent<NetworkManager>();
     }
 
-    public void HostStart()
+    public void HostStart(String ip, String host)
     {
-        Server_S_UI('H');
-        networkManager.StartHost();
-    }
-    public void ServerStart()
-    {
-        Server_S_UI('S');
-        networkManager.StartServer();
-    }
-    public void ClientStart()
-    {
-        if (INVTCODE != null)
+        if (ip != null && host != null)
         {
-            JoinGame(INVTCODE);
-            return;
+            networkManager.StartHost();
         }
-        Server_S_UI('C');
-        networkManager.StartClient();
+        else
+        {
+            CreateHost();
+        }
+        Server_S_UI_Rpc('H');
+        return;
+    }
+
+    public void ClientStart(String code)
+    {
+        if (code != null)
+        {
+            JoinGame(code);
+        }
+        else
+        {
+            networkManager.StartClient();
+        }
+        Server_S_UI_Rpc('C');
+        return;
+    }
+    
+    public void StopServer()
+    {
+        Debug.Log("STOP!");
     }
 
     [Rpc(SendTo.Server)]
-    private void Server_S_UI(char serverStateText)
+    private void Server_S_UI_Rpc(char serverStateText)
     {
         string Text = "Current State : <" + serverStateText + ">";
         serverStateUI.text = Text;
@@ -80,7 +94,6 @@ public class ServerManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("HostUnityRplay")]
     public async Task CreateHost()
     {
         try
@@ -96,7 +109,7 @@ public class ServerManager : MonoBehaviour
                     .CreateSessionAsync(options);
 
             JoinCode = currentSession.Code;
-
+            inviteCodeUI.text = "InviteCode : <" + JoinCode +">";
             Debug.Log($"Relay Host 생성 완료");
             Debug.Log($"Join Code : {JoinCode}");
         }
@@ -106,7 +119,6 @@ public class ServerManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("JoinUnityRplay")]
     public async Task JoinGame(string joinCode)
     {
         try
